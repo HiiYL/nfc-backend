@@ -1,0 +1,16 @@
+<h1>Check-ins So Far <%= @count %> </h1>
+<p><%= link_to "Refresh", refresh_path, remote:true %>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Ticket Status</th>
+	</tr>
+<% @attendees.each do |test| %>
+	<tr>
+		<td><%= test.name %></td>
+		<td><%= test.email %></td>
+		<td><%= test.status %></td>
+	</tr>
+<% end %>
+</table>

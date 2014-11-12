@@ -34,8 +34,8 @@ class StaticPagesController < ApplicationController
     @event = @eb.events(id:***REMOVED***)
     @time = User.db_last_updated.updated_at.utc
     @time = @time.strftime("%Y-%m-%dT%H:%M:%SZ")
-    #page_count = @event.attendees(status:"attending",changed_since:"2014-11-12T7:23:03Z").get.body["pagination"]["page_count"]
-    #for i in 1..page_count
+    page_count = @event.attendees(status:"attending",changed_since:@time).get.body["pagination"]["page_count"]
+    for i in 1..page_count
       @attendees = @event.attendees(status:"attending",changed_since:@time).get.body["attendees"]
       @attendees.each do |test| 
         unless user = User.find_by(name: test["profile"]["name"])
@@ -48,7 +48,7 @@ class StaticPagesController < ApplicationController
           user.update_attributes(status: test["barcodes"].first["status"])
         end
       end
-    #end
+    end
     redirect_to root_url
   end
 end

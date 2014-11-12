@@ -22,6 +22,6 @@ ActiveRecord::Schema.define(version: 20141112090415) do
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true
-  add_index "users", ["status"], name: "index_users_on_status", unique: true
+  add_index "users", ["status"], name: "index_users_on_status"
 
 end

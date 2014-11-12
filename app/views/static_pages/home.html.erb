@@ -1,16 +1,20 @@
 <h1>Check-ins So Far <%= @count %> </h1>
-<p><%= link_to "Refresh", update_path %>
+<p><%= link_to "Refresh", update_path %></p>
+<p><%= link_to "Sort By Date Edited", sort_date_path %></p>
+<p><%= link_to "Sort By Status", sort_status_path %></p>
 <table>
 	<tr>
 		<th>Name</th>
 		<th>Email</th>
 		<th>Ticket Status</th>
+		<Th>Last Edited</th>
 	</tr>
 <% @attendees.each do |test| %>
 	<tr>
 		<td><%= test.name %></td>
 		<td><%= test.email %></td>
 		<td><%= test.status %></td>
+		<td><%= test.updated_at.localtime %></td>
 	</tr>
 <% end %>
 </table>

@@ -6,11 +6,11 @@ class StaticPagesController < ApplicationController
     @count = User.all.num_of_checkins
   end
   def refresh_db
-    EventbriteAPI::Configuration.access_token="54X654CD2AJ3XPAPM45B"
-    #EventbriteAPI::Configuration.access_token="***REMOVED***"
+    #EventbriteAPI::Configuration.access_token="54X654CD2AJ3XPAPM45B"
+    EventbriteAPI::Configuration.access_token="***REMOVED***"
     @eb = EventbriteAPI.new
-    #@event = @eb.events(id:***REMOVED***)
     @event = @eb.events(id:***REMOVED***)
+    #@event = @eb.events(id:***REMOVED***)
 
     page_count = @event.attendees(status:"attending",changed_since:"2014-11-12T7:23:03Z").get.body["pagination"]["page_count"]
     for i in 1..page_count

@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   get 'refresh' => 'static_pages#refresh_db'
   get 'update' => 'static_pages#update_db'
+  get 'sort_date' => 'static_pages#sort_by_changed_date'
+  get 'sort_status'=> 'static_pages#sort_by_status'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

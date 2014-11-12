@@ -2,8 +2,16 @@ require 'json'
 require 'open-uri'
 class StaticPagesController < ApplicationController
   def home
-    @attendees = User.all.sorted_by_status
+    @attendees = User.all
     @count = User.all.num_of_checkins
+  end
+  def sort_by_changed_date
+    @attendees = User.all.last_updated
+    render 'home'
+  end
+  def sort_by_status
+    @attendees = User.all.sorted_by_status
+    render 'home'
   end
   def refresh_db
     #EventbriteAPI::Configuration.access_token="54X654CD2AJ3XPAPM45B"
@@ -11,10 +19,9 @@ class StaticPagesController < ApplicationController
     @eb = EventbriteAPI.new
     @event = @eb.events(id:***REMOVED***)
     #@event = @eb.events(id:***REMOVED***)
-
-    page_count = @event.attendees(status:"attending",changed_since:"2014-11-12T7:23:03Z").get.body["pagination"]["page_count"]
+    page_count = @event.attendees(status:"attending",changed_since:"2010-11-12T7:23:03Z").get.body["pagination"]["page_count"]
     for i in 1..page_count
-      @attendees = @event.attendees(status:"attending",page:i,changed_since:"2014-11-12T7:23:03Z").get.body["attendees"]
+      @attendees = @event.attendees(status:"attending",page:i,changed_since:"2010-11-12T7:23:03Z").get.body["attendees"]
       @attendees.each do |test| 
         unless User.find_by(name: test["profile"]["name"].to_s)
           user = User.new
@@ -27,16 +34,21 @@ class StaticPagesController < ApplicationController
     end
   end
   def update_db
-    EventbriteAPI::Configuration.access_token="54X654CD2AJ3XPAPM45B"
-    #EventbriteAPI::Configuration.access_token="***REMOVED***"
+    #EventbriteAPI::Configuration.access_token="54X654CD2AJ3XPAPM45B"
+    EventbriteAPI::Configuration.access_token="***REMOVED***"
     @eb = EventbriteAPI.new
-    #@event = @eb.events(id:***REMOVED***)
     @event = @eb.events(id:***REMOVED***)
-    @time = User.db_last_updated.updated_at.utc
-    @time = @time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    #@event = @eb.events(id:***REMOVED***)
+    if User.count > 0
+      @time = User.last_updated.first.updated_at.utc
+      @time = @time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    else
+      @time = "2010-11-12T7:23:03Z"
+    end
+    print "HELOOOOOOOOOOOOOOOOOOOO" + @time
     page_count = @event.attendees(status:"attending",changed_since:@time).get.body["pagination"]["page_count"]
     for i in 1..page_count
-      @attendees = @event.attendees(status:"attending",changed_since:@time).get.body["attendees"]
+      @attendees = @event.attendees(status:"attending",page:i,changed_since:@time).get.body["attendees"]
       @attendees.each do |test| 
         unless user = User.find_by(name: test["profile"]["name"])
           user = User.new

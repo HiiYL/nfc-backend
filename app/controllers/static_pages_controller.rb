@@ -74,7 +74,6 @@ class StaticPagesController < ApplicationController
     print "DEBUG"
     print params[:id]
     #render @user
-    respond_to do |format|
         if @user
           if @user.status == "unused"
             @user.update_attribute(:status, "used")
@@ -85,7 +84,6 @@ class StaticPagesController < ApplicationController
         else
           hash = {status: 404}
         end
-        format.json {render json:hash}
-      end
+        render json:hash
   end
 end

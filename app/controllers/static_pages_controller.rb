@@ -29,11 +29,11 @@ class StaticPagesController < ApplicationController
     end
   end
   def update_db
-    #EventbriteAPI::Configuration.access_token="***REMOVED***"
-    EventbriteAPI::Configuration.access_token="***REMOVED***"
+    #EventbriteAPI::Configuration.access_token="RDZSICEND4I7P3ALONWZ"
+    EventbriteAPI::Configuration.access_token=ENV['ACCESS_KEY']
     @eb = EventbriteAPI.new
-    @event = @eb.events(id:***REMOVED***)
-    #@event = @eb.events(id:***REMOVED***)
+    @event = @eb.events(id:ENV['EVENT'])
+    #@event = @eb.events(id:14160017995)
     if User.count > 0
       @time = User.last_updated.first.updated_at.utc
       @time = @time.strftime("%Y-%m-%dT%H:%M:%SZ")

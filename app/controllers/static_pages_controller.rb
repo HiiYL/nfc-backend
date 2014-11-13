@@ -1,6 +1,7 @@
 require 'json'
 require 'open-uri'
-class StaticPagesController < ApplicationController
+class StaticPagesController < ApplicationControllerb
+  before_filter :authenticate
   http_basic_authenticate_with ENV['USER'], password: ENV['PASS']
     if session[:test].nil?
       @users = User.all
@@ -62,6 +63,13 @@ class StaticPagesController < ApplicationController
     @users = User.all.send(session[:test])
     respond_to do |format|
       format.js {}
+    end
+  end
+  protected
+
+  def authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+    username == ENV['USER'] && password == ENV['PASS']
     end
   end
 end

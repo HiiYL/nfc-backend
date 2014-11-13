@@ -67,4 +67,23 @@ class StaticPagesController < ApplicationController
       format.js {}
     end
   end
+  def checkin
+    #@users = User.all
+    #render text: "WTF"
+    @user = User.find_by(uid: params[:id])
+    #render @user
+    respond_to do |format|
+        if @user
+          if @user.status == "unused"
+            @user.update_attribute(:status, "used")
+            hash = {status: "300", name: @user.name}
+          else
+            hash = {status: "200"}
+          end
+        else
+          hash = {status: "100"}
+        end
+        format.json {render json:hash}
+      end
+  end
 end

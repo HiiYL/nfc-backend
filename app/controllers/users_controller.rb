@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    @user = User.find_by(id: params[:id])
     @users = User.all
     @count = User.all.num_of_checkins
   end

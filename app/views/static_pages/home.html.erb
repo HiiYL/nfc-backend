@@ -1,6 +1,14 @@
 <div class = "container">
+	<div id = "loading">AJAX VERIFICATION</div>
 	<h1>Check-ins So Far <%= @count %> </h1>
 	<div id = "notification">Notification placeholder</div>
+	
+	<p class = "test">jQuery Test</p>
+	<!-- <p><%= link_to "Refresh", update_path %></p> DEPRECATED--> 	
+	<p><%= link_to "Sort By Date Edited", sort_date_path, remote:true %></p>
+	<p><%= link_to "Sort By Status", sort_status_path, remote:true %></p>
+	<%= link_to "Refresh AJAX", ajax_path, class: "ajax", remote:true %>
+	<%= image_tag "ajax-loader.gif", id: "ajax-loader" %>
 	<table class = "table">
 		<tr>
 			<th>Name</th>
@@ -12,26 +20,19 @@
 			<%= render @users %>
 		</tbody>
 	</table>
-	<p>jQuery Test</p>
-	<!-- <p><%= link_to "Refresh", update_path %></p> DEPRECATED--> 
-	<p><%= link_to "Sort By Date Edited", sort_date_path %></p>
-	<p><%= link_to "Sort By Status", sort_status_path %></p>
-	<%= link_to "Refresh AJAX", ajax_path, class: "ajax", remote:true %>
-	<div id = "loadingDiv">HEllo there guys</div>
 </div>
 <script>
 	$(document).ready(function() {
-		$.ajax({
-  // your ajax code
-  beforeSend: function(){
-       $('.loadingDiv').show()
-   },
-  complete: function(){
-       $('.loadingDiv').hide();
-  }
-});
-    $("p").click(function() {
+		$("#ajax-loader").hide();
+    $("p.test").click(function() {
       $(this).hide();
     });   
   });
+$(document).bind("ajaxSend", function(){
+   $(".ajax").text("Loading");
+   $("#ajax-loader").show();
+ }).bind("ajaxComplete", function(){
+   $(".ajax").text("Refresh AJAX");
+   $("#ajax-loader").hide();
+ });
 </script>

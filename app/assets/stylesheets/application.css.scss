@@ -21,3 +21,13 @@
 	background: image-url("ajax-loader.gif") no-repeat top center fixed;
   background-size:100%;
 }
+#ajax_verify {
+	background-color:black;
+	width:150px;
+	height:150px;
+	-webkit-animation: myfirst 5s infinite
+}
+@-webkit-keyframes myfirst {
+    from {background: red;}
+    to {background: yellow;}
+}

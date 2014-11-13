@@ -71,17 +71,19 @@ class StaticPagesController < ApplicationController
     #@users = User.all
     #render text: "WTF"
     @user = User.find_by(uid: params[:id])
+    print "DEBUG"
+    print params[:id]
     #render @user
     respond_to do |format|
         if @user
           if @user.status == "unused"
             @user.update_attribute(:status, "used")
-            hash = {status: "300", name: @user.name}
+            hash = {status: 200, content: @user.name}
           else
-            hash = {status: "200"}
+            hash = {status: 409}
           end
         else
-          hash = {status: "100"}
+          hash = {status: 404}
         end
         format.json {render json:hash}
       end

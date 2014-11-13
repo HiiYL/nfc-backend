@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  resources :users
+
   root 'static_pages#home'
+  post 'users' => 'static_pages#home'
+  get 'ajax' => 'static_pages#ajax'
   get 'refresh' => 'static_pages#refresh_db'
   get 'update' => 'static_pages#update_db'
   get 'sort_date' => 'static_pages#sort_by_changed_date'
   get 'sort_status'=> 'static_pages#sort_by_status'
+  get 'checkin' => 'static_pages#ajax_verify'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

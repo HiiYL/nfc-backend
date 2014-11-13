@@ -1,7 +1,9 @@
 require 'json'
 require 'open-uri'
 class StaticPagesController < ApplicationController
-  http_basic_authenticate_with name: "nfc", password: "nfc"
+  if Rails.env == "production"
+    http_basic_authenticate_with name: ENV['USER'], password: ['PASS']
+  end
   def home
     if session[:test].nil?
       @users = User.all

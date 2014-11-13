@@ -1,0 +1,12 @@
+<tr>
+	<td><%= user.name %></td>
+	<td><%= user.email %></td>
+	<td><%= user.status %></td>
+	<td><%= user.updated_at.localtime %></td>
+	<td>
+	<%= form_for user, remote:true do |f| %>
+	<%= f.hidden_field :status, value: "used" %>
+	<%= f.submit "Check In" %>
+	<% end %>
+	</td>
+</tr>

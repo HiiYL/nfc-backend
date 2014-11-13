@@ -1,0 +1,37 @@
+<div class = "container">
+  <h1>Check-ins So Far <%= @count %> </h1>
+  <div id = "notification">Notification placeholder</div>
+  <table class = "table">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Last Updated</th>
+    </tr>
+    <tbody id = "ajax">
+      <%= render @users %>
+    </tbody>
+  </table>
+  <p>jQuery Test</p>
+  <!-- <p><%= link_to "Refresh", update_path %></p> DEPRECATED--> 
+  <p><%= link_to "Sort By Date Edited", sort_date_path %></p>
+  <p><%= link_to "Sort By Status", sort_status_path %></p>
+  <%= link_to "Refresh AJAX", ajax_path, class: "ajax", remote:true %>
+  <div id = "loadingDiv">HEllo there guys</div>
+</div>
+<script>
+  $(document).ready(function() {
+    $.ajax({
+  // your ajax code
+  beforeSend: function(){
+       $('.loadingDiv').show()
+   },
+  complete: function(){
+       $('.loadingDiv').hide();
+  }
+});
+    $("p").click(function() {
+      $(this).hide();
+    });   
+  });
+</script>

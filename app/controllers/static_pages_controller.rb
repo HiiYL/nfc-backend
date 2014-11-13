@@ -1,7 +1,7 @@
 require 'json'
 require 'open-uri'
 class StaticPagesController < ApplicationController
-  def home
+  http_basic_authenticate_with ENV['USER'], password: ENV['PASS']
     if session[:test].nil?
       @users = User.all
     else

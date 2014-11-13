@@ -2,7 +2,7 @@ require 'json'
 require 'open-uri'
 class StaticPagesController < ApplicationController
   if Rails.env == "production"
-    http_basic_authenticate_with name: ENV['USER'], password: ['PASS']
+    http_basic_authenticate_with name: ENV['USER'], password: ENV['PASS']
   end
   def home
     if session[:test].nil?

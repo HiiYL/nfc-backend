@@ -1,0 +1,30 @@
+<div class = "container">
+	<h1>Live Updates!</h1>
+	<div id = "test"></div>
+</div>
+<script>
+	$(document).ready(function(){
+    setInterval(refreshDiv, 5000); 
+	});
+	function refreshDiv(){
+	alert("Refreshing");
+	$.ajax({
+	  url: "http://path.to.your/webservice",
+	  //other stuff you need to build your ajax request
+	 }).done(function() {
+	   $('test').load('/static_pages_controller/home');//update your div
+	 });
+	}
+	(function worker() {
+  $.ajax({
+    url: 'ajax/test.html', 
+    success: function(data) {
+      $('.result').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 5000);
+    }
+  });
+}	)(); 
+</script>

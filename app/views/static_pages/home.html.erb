@@ -1,21 +1,25 @@
 <div class = "container">
-	<div id = "loading">AJAX VERIFICATION</div>
-	<h1>Check-ins So Far <%= @count %> </h1>
-	<h1>Hello <%= ENV['AWESOME_GEM_URL']%></h1>
-	<div id = "notification">Notification placeholder</div>
 	
 	<p class = "test">jQuery Test</p>
-	<!-- <p><%= link_to "Refresh", update_path %></p> DEPRECATED--> 	
-	<p><%= link_to "Sort By Date Edited", sort_date_path, remote:true %></p>
-	<p><%= link_to "Sort By Status", sort_status_path, remote:true %></p>
-	<%= link_to "Refresh AJAX", ajax_path, class: "ajax", remote:true %>
+	<!-- <p><%= link_to "Refresh", update_path %></p> DEPRECATED--> 
+	<p>Sort By:
+	<%= link_to "Name", sort_name_path, remote:true %> 
+	 |
+	<%= link_to "Date Edited", sort_date_path, remote:true %>
+	 | 
+	<%= link_to "Status", sort_status_path, remote:true %>
+	 | 
+	</p>
+	<%= link_to "Refresh AJAX", ajax_path, class: "ajax", remote:true %>	
 	<%= image_tag "ajax-loader.gif", id: "ajax-loader" %>
-	<table class = "table">
+	<input type = "checkbox" class = "task-check">AutoRefresh</input>
+	<table class = "table table-bordered table-striped">
 		<tr>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Status</th>
 			<th>Last Updated</th>
+			<th>Action</th>
 		</tr>
 		<tbody id = "ajax">
 			<%= render @users %>
@@ -27,7 +31,26 @@
 		$("#ajax-loader").hide();
     $("p.test").click(function() {
       $(this).hide();
-    });   
+    });
+    $(".task-check").bind('change', function(){
+	  if (this.checked){
+	    (function worker() {
+		  $.ajax({
+		    url: '<%= ajax_path %>', 
+		    complete: function() {
+		      // Schedule the next request when the current one's complete
+		      setTimeout(worker, 5000);
+		    }
+		  });
+		})();
+	  }
+	  else {
+	     setTimeout(worker, 9999999999999999999);
+	  }
+}); 
+    //setInterval(function(){
+    //$('#whatever').load('<%= ajax_path %>');}, 5000);
+    
   });
 $(document).bind("ajaxSend", function(){
    $(".ajax").text("Loading");
@@ -36,4 +59,5 @@ $(document).bind("ajaxSend", function(){
    $(".ajax").text("Refresh AJAX");
    $("#ajax-loader").hide();
  });
+
 </script>

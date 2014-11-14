@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :users
+  get 'live' => 'static_pages#live_update'
   get 'checkin/:id' => 'static_pages#checkin'
   root 'static_pages#home'
   post 'users' => 'static_pages#home'
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
   get 'update' => 'static_pages#update_db'
   get 'sort_date' => 'static_pages#sort_by_changed_date'
   get 'sort_status'=> 'static_pages#sort_by_status'
+  get 'sort_name' => 'static_pages#sort_by_name'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

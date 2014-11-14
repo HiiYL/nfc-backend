@@ -10,7 +10,14 @@ class StaticPagesController < ApplicationController
     else
       @users =User.all.send(session[:sort])
     end
-    @count = User.all.num_of_checkins
+  end
+  def sort_by_name
+    session[:sort]="sort_by_name"
+    @users = User.all.send(session[:sort])
+    respond_to do |format|
+      format.html {render 'home'}
+      format.js {}
+    end
   end
   def sort_by_changed_date
     session[:sort] = "last_updated"
@@ -53,5 +60,8 @@ class StaticPagesController < ApplicationController
           hash = {status: 404}
         end
         render json:hash
+  end
+  def live_update
+    @users = User.all
   end
 end

@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	scope :sorted_by_status, -> {order(:status)}
-	scope :num_of_checkins, ->{where(status: "used").count}
-	scope :last_updated, ->{order(:updated_at)}
+	scope :last_updated, ->{order(updated_at: :desc)}
+	scope :sort_by_name, ->{order(:name)}
 end
 public
 def update_db

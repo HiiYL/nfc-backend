@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
 	scope :num_of_checkins, ->{where(status: "used").count}
 	scope :last_updated, ->{order(:updated_at)}
 end
-<<<<<<< HEAD
 public
 def update_db
     EventbriteAPI::Configuration.access_token=ENV['ACCESS_KEY']
@@ -35,5 +34,3 @@ def update_db
       end
     end 
   end
-=======
->>>>>>> d9c78844e02b966b3acae441271cfa2c433b2539

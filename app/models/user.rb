@@ -8,6 +8,16 @@ def update_db
     EventbriteAPI::Configuration.access_token=ENV['ACCESS_KEY']
     @eb = EventbriteAPI.new
     @event = @eb.events(id:ENV['EVENT'])
+    if Update.count < 1
+      print "YOOOOOOOOOOOOOHOOOOOOOOOOOOOOOOOOO"
+      @time = "2010-11-12T7:23:03Z"
+      update = Update.new
+      update.time = Time.now.strftime("%Y-%m-%dT%H:%M:%SZ")
+      update.save
+    else
+      @time = Update.first.time
+      Update.first.update_attribute(:time, Time.now.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    end
     if User.count > 0
       @time = User.last_updated.first.updated_at.utc
       @time = @time.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -32,6 +42,8 @@ def update_db
           unless user.status == test["barcodes"].first["status"]
             user.update_attribute(:status, test["barcodes"].first["status"])
           end
+          user.update_attributes(card_no: test["answers"].find{ |h| h["question_id"]=="8754207" }["answer"],
+                                 student_id: test["answers"].find{ |h| h["question_id"]=="8693425" }["answer"])
         end
       end
     end 

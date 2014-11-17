@@ -4,11 +4,14 @@
 	<td><%= user.student_id %></td>
 	<td><%= user.status %></td>
 	<td><%= user.updated_at.localtime %></td>
-	<td>
-	<% if user.status == 'unused' %>
-		<%= form_for user, remote:true do |f| %>
-		<%= f.hidden_field :status, value: "used" %>
-		<%= f.submit "Check In" %>
+	<td>	
+	<%= form_for user, remote:true do |f| %>
+		<% if user.status == 'unused' %>
+			<%= f.hidden_field :status, value: "used" %>
+			<%= f.submit "Check In", class: "btn btn-success" %>
+		<% else %>
+			<%= f.hidden_field :status, value: "unused" %>
+			<%= f.submit "Check Out", class: "btn btn-danger" %>
 		<% end %>
 	<% end %>
 	</td>

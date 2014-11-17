@@ -1,5 +1,3 @@
-require 'json'
-require 'open-uri'
 class StaticPagesController < ApplicationController
   if Rails.env == "production"
     http_basic_authenticate_with name: ENV['USER'], password: ENV['PASS']
@@ -35,7 +33,7 @@ class StaticPagesController < ApplicationController
       format.js {}
     end
   end
-  def ajax
+  def refresh
     User.update_db
     @users = User.all.send(session[:sort])
     respond_to do |format|

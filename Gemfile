@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails',                '4.2.0.beta2'
 gem 'thin'
 gem 'figaro'
+gem "therubyracer"
 gem 'eventbrite_api'
 gem 'dotenv-rails', '~> 1.0.2'
 gem 'nokogiri'

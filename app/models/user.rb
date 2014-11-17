@@ -12,17 +12,11 @@ def update_db
       print "YOOOOOOOOOOOOOHOOOOOOOOOOOOOOOOOOO"
       @time = "2010-11-12T7:23:03Z"
       update = Update.new
-      update.time = Time.now.strftime("%Y-%m-%dT%H:%M:%SZ")
+      update.time = Time.now
       update.save
     else
-      @time = Update.first.time
-      Update.first.update_attribute(:time, Time.now.strftime("%Y-%m-%dT%H:%M:%SZ"))
-    end
-    if User.count > 0
-      @time = User.last_updated.first.updated_at.utc
-      @time = @time.strftime("%Y-%m-%dT%H:%M:%SZ")
-    else
-      @time = "2010-11-12T7:23:03Z"
+      @time = Update.first.time.strftime("%Y-%m-%dT%H:%M:%SZ")
+      Update.first.update_attribute(:time, Time.now)
     end
     print "HELOOOOOOOOOOOOOOOOOOOO" + @time
     page_count = @event.attendees(status:"attending",changed_since:@time).get.body["pagination"]["page_count"]

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  #resources :users
+  resources :users
   get 'live' => 'static_pages#live_update'
   get 'checkin/:id' => 'static_pages#checkin'
   root 'static_pages#home'

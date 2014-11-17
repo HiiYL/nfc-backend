@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113125624) do
+ActiveRecord::Schema.define(version: 20141112090415) do
 
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "status"
+    t.string   "student_id"
+    t.string   "card_no"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "uid"
   end
 
+  add_index "users", ["card_no"], name: "index_users_on_card_no"
   add_index "users", ["name"], name: "index_users_on_name", unique: true
   add_index "users", ["status"], name: "index_users_on_status"
 

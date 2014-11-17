@@ -35,7 +35,11 @@ class StaticPagesController < ApplicationController
   end
   def refresh
     User.update_db
-    @users = User.all.send(session[:sort])
+    if session[:sort].nil?
+      @users = User.all
+    else
+      @users = User.all.send(session[:sort])
+    end
     respond_to do |format|
       format.js {}
     end
@@ -43,7 +47,7 @@ class StaticPagesController < ApplicationController
   def checkin
     #@users = User.all
     #render text: "WTF"
-    @user = User.find_by(uid: params[:id])
+    @user = User.find_by(card_no: params[:id])
     print "DEBUG"
     print params[:id]
     #render @user

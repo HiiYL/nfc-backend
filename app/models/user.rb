@@ -24,6 +24,8 @@ def update_db
           user.name = test["profile"]["name"]
           user.email = test["profile"]["email"]
           user.status = test["barcodes"].first["status"]
+          user.card_no = test["answers"].find{ |h| h["question_id"]=="8754207" }["answer"]
+          user.student_id = test["answers"].find{ |h| h["question_id"]=="8693425" }["answer"]
           user.save
         else
           #if test["barcodes"].first["status"] == 'used' && user.status == 'unused'

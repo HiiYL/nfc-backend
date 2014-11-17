@@ -1,7 +1,6 @@
 <div class = "container">
 	
 	<p class = "test">jQuery Test</p>
-	<!-- <p><%= link_to "Refresh", update_path %></p> DEPRECATED--> 
 	<p>Sort By:
 	<%= link_to "Name", sort_name_path, remote:true %> 
 	 |
@@ -16,7 +15,8 @@
 	<table class = "table table-bordered table-striped">
 		<tr>
 			<th>Name</th>
-			<th>Email</th>
+			<th>Card Serial</th>
+			<th>Student ID </th>
 			<th>Status</th>
 			<th>Last Updated</th>
 			<th>Action</th>
@@ -36,7 +36,7 @@
 	  if (this.checked){
 	    (function worker() {
 		  $.ajax({
-		    url: "<%= ajax_path %>", 
+		    url: "<%= refresh_path %>", 
 		    complete: function() {
 		      // Schedule the next request when the current one's complete
 		      setTimeout(worker, 5000);
@@ -45,9 +45,6 @@
 		})();
 	  }
 }); 
-    //setInterval(function(){
-    //$('#whatever').load('<%= ajax_path %>');}, 5000);
-    
   });
 $(document).bind("ajaxSend", function(){
    $(".ajax").text("Loading");

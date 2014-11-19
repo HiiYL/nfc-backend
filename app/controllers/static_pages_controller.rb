@@ -67,9 +67,9 @@ class StaticPagesController < ApplicationController
     @users = User.all
   end
   def nfc
-      @nfc_context = NFC::Context.new
-      @nfc_device = @nfc_context.open nil
-      @card_content = @nfc_device.poll
+      @@nfc_context ||= NFC::Context.new
+      @@nfc_device ||= @@nfc_context.open nil
+      @card_content = @@nfc_device.poll
       if @card_content.class == NFC::ISO14443A
         # Get the card serial no
         @uid = @card_content.uid.collect! { |x| x.to_s(16) }.reverse!.join.to_i(16).to_s.rjust(10, "0")
@@ -87,11 +87,15 @@ class StaticPagesController < ApplicationController
         else
             @status = 404
         end
+      else
+        render :status => 500
       end
       respond_to do |format|
         format.js{}
       end
   end
   def taptapfront
+    @@nfc_context ||= NFC::Context.new
+    @@nfc_device ||= @@nfc_context.open nil
   end
 end

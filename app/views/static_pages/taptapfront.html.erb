@@ -76,9 +76,13 @@
     (function worker() {
       $.ajax({
         url: "<%= nfc_path %>",
-        complete: function() {
-          setTimeout(worker, 500);
-        } 
+        success: function() {
+          // Schedule the next request when the current one's complete
+          setTimeout(worker, 1000);
+        },
+        error: function() {
+          setTimeout(worker, 0);
+        }
       });
     })();
   });

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :users
+  get 'tap' => 'static_pages#taptapfront'
   get 'live' => 'static_pages#live_update'
+  get 'nfc' => 'static_pages#nfc'
   get 'checkin/:id' => 'static_pages#checkin'
   root 'static_pages#home'
   post 'users' => 'static_pages#home'

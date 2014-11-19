@@ -1,0 +1,111 @@
+  <div class="scene" id="scene0-loading">
+    <div class="scene-content">
+      <paper>-progress{:indeterminate => ""}</paper>
+    </div>
+  </div>
+  <div class="scene hidden" id="scene1-default">
+    <div class="outer-fab">
+      <div class="fab-content">
+        <div class="fab-icon"></div>
+        <div class="h1-buffer">
+          <h1>Tap To Check In.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scene hidden" id="scene1a-pinging">
+    <div class="outer-fab">
+      <div class="fab-content">
+        <div class="fab-icon">
+          <paper>-spinner.paper_spinner{:active => true}</paper>
+        </div>
+        <div class="h1-buffer"></div>
+      </div>
+    </div>
+  </div>
+  <div class="scene temporary-scene hidden" id="scene2-success">
+    <div class="outer-fab">
+      <div class="fab-content">
+        <div class="fab-icon"></div>
+        <div class="h1-buffer">
+          <h1>
+            <span id="student_name"></span>
+            &nbsp;
+            <span id="student_id"></span>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scene temporary-scene hidden" id="scene3-alreadycheckedin">
+    <div class="outer-fab">
+      <div class="fab-content">
+        <div class="fab-icon"></div>
+        <div class="h1-buffer">
+          <h1>You Have Already Checked In.</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scene temporary-scene hidden" id="scene4-notfound">
+    <div class="outer-fab">
+      <div class="fab-content">
+        <div class="fab-icon"></div>
+        <div class="h1-buffer">
+          <h1>Not Found</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scene temporary-scene hidden" id="scene5-error">
+    <div class="outer-fab">
+      <div class="fab-content">
+        <div class="fab-icon"></div>
+        <div class="h1-buffer">
+          <h1>An Error Has Occured</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  $(document).ready(function() {
+    showScene($('#scene1-default'))
+    $(".scene").click(function() {
+      $(this).hide();
+    });
+    (function worker() {
+      $.ajax({
+        url: "<%= nfc_path %>", 
+        complete: function() {
+          // Schedule the next request when the current one's complete
+          setTimeout(worker, 5000);
+        }
+      });
+    })();
+  });
+var showScene;
+
+showScene = function($scene, temporary) {
+  if (temporary == null) {
+    temporary = false;
+  }
+  $('.temporary-scene').hide();
+  $scene.removeClass('hidden');
+  if (temporary) {
+    $scene.removeClass('entry exit').hide();
+    clearTimeout(window["animation-timeout-" + $scene[0].id]);
+    window["animation-timeout-" + $scene[0].id] = setTimeout(function() {
+      return hideScene($scene);
+    }, 3000);
+  }
+  $scene.removeClass('exit').show().addClass('entry');
+  $scene.find('.outer-fab').addClass('entry');
+  $scene.find('.fab-icon').addClass('entry');
+  return $scene.find('h1').addClass('entry');
+};
+
+window.hideScene = function($scene) {
+  return $scene.addClass('exit').delay(500).hide(0).removeClass('entry');
+};
+
+</script>

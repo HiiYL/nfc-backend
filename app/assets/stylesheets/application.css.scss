@@ -22,3 +22,21 @@
 	background: image-url("ajax-loader.gif") no-repeat top center fixed;
   background-size:100%;
 }
+.checkin-prompt { 
+  width:100%;
+  border-radius:50%;
+  text-align:center;
+  font-size: 48px;
+  padding:50% 0;
+  line-height:0;
+  position:absolute;
+  background: #38a9e4;
+  color: white;
+  font-family: Helvetica, Arial Black, sans;
+}
+.circle {
+	border-radius: 50%;
+	width: 200px;
+	height: 200px;
+	/* width and height can be anything, as long as they're equal */
+}

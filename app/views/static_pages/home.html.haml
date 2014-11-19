@@ -1,0 +1,44 @@
+<script>
+	$(document).ready(function() {
+		$("#ajax-loader").hide();
+    $("p.test").click(function() {
+      $(this).hide();
+    });
+    $(".scene").click(function() {
+    	$(this).addClass("exit");
+    });
+    $(".task-check").bind('change', function(){
+	  if (this.checked){
+	    (function worker() {
+		  $.ajax({
+		    url: "<%= refresh_path %>", 
+		    complete: function() {
+		      // Schedule the next request when the current one's complete
+		      setTimeout(worker, 1000);
+		    }
+		  });
+		})();
+	  }
+	});
+	$(".poll-nfc").bind('change', function(){
+	(function worker_nfc() {
+		  $.ajax({
+		    url: "<%= nfc_path %>", 
+		    complete: function() {
+		      // Schedule the next request when the current one's complete
+		      setTimeout(worker, 0);
+		    }
+		  });
+		})(); 
+	});
+	$(".checkin-prompt").hide();
+  });
+$(document).bind("ajaxSend", function(){
+   $(".ajax").text("Loading");
+   $("#ajax-loader").show();
+ }).bind("ajaxComplete", function(){
+   $(".ajax").text("Refresh AJAX");
+   $("#ajax-loader").hide();
+ });
+
+</script>

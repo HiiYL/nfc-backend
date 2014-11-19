@@ -1,7 +1,9 @@
-<% if @status == 200 %>
-	 showScene($('#scene2-success'), true);
-<% elsif @status == 409 %>
-	showScene($('#scene3-alreadycheckedin'), true);
-<% else %>
-	showScene($('#scene4-notfound'), true);
+<% unless @uid.nil? %>
+	<% if @status == 200 %>
+		 showScene($('#scene2-success'), true);
+	<% elsif @status == 409 %>
+		showScene($('#scene3-alreadycheckedin'), true);
+	<% else %>
+		showScene($('#scene4-notfound'), true);
+	<% end %>
 <% end %>

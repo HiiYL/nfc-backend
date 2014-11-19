@@ -10,22 +10,6 @@
 	 | 
 	</p>
 	<%= link_to "Refresh AJAX", refresh_path, class: "ajax", remote:true %>	
-	<%= link_to "NFC", nfc_path, remote:true %>
-	<div class="alert alert-success checkin-prompt" id="success" role="alert">
-	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  Login Succesful
-	</div>
-	<div class="alert alert-danger checkin-prompt" id="alreadylogged"  role="alert">
-	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  <span class="sr-only">Error:</span>
-	  Already logged in</div>
-	</div>
-	<div class="alert alert-danger checkin-prompt" id="invalid" role="alert">
-	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  <span class="sr-only">Error:</span>
-	  No record found
-	</div>
-	<div id = "nfc">NFC</div>
 	<%= image_tag "ajax-loader.gif", id: "ajax-loader" %>
 	<input type = "checkbox" class = "task-check">AutoRefresh</input>
 	<table class = "table table-bordered table-striped table-hover">

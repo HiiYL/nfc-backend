@@ -69,28 +69,27 @@ class StaticPagesController < ApplicationController
   def nfc
       @nfc_context = NFC::Context.new
       @nfc_device = @nfc_context.open nil
-      while true
-        @card_content = @nfc_device.poll
-        if @card_content.class == NFC::ISO14443A
+      @card_content = @nfc_device.poll
+      if @card_content.class == NFC::ISO14443A
         # Get the card serial no
         @uid = @card_content.uid.collect! { |x| x.to_s(16) }.reverse!.join.to_i(16).to_s.rjust(10, "0")
         # If the card is still on the reader we skip the loop
-        break
-        end
       end
-      @user = User.find_by(card_no: @uid)
-      if @user
-        if @user.status == "unused"
-          @user.update_attribute(:status, "used")
-          @status = 200
+      unless @uid.nil?
+        @user = User.find_by(card_no: @uid)
+        if @user
+          if @user.status == "unused"
+            @user.update_attribute(:status, "used")
+            @status = 200
+          else
+            @status = 409
+          end
         else
-          @status = 409
+            @status = 404
         end
-      else
-          @status = 404
       end
       respond_to do |format|
-        format.js {}
+        format.js{}
       end
   end
   def taptapfront
